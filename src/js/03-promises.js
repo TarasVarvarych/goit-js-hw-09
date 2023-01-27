@@ -27,18 +27,21 @@ function onFormSubmit(e) {
   const stepNumber = Number(step.value);
   const amountNumber = Number(amount.value);
 
-  setTimeout(() => {}, delayNumber);
-
-  let intervalId = setInterval(() => {
-    if (MAX_COUNTS === amountNumber) {
-      clearInterval(intervalId);
-      return;
-    }
-    let position = 1 + MAX_COUNTS;
-    let del = delayNumber + stepNumber * MAX_COUNTS;
-    createPromise(position, del);
+  setTimeout(() => {
+    createPromise(1, delayNumber);
     MAX_COUNTS += 1;
-  }, stepNumber);
+    let intervalId = setInterval(() => {
+      if (MAX_COUNTS === amountNumber) {
+        clearInterval(intervalId);
+        return;
+      }
+      let position = 1 + MAX_COUNTS;
+      let del = delayNumber + stepNumber * MAX_COUNTS;
+      createPromise(position, del);
+      MAX_COUNTS += 1;
+    }, stepNumber);
+  }, delayNumber);
+
   e.currentTarget.reset();
   MAX_COUNTS = 0;
 }
